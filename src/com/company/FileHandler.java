@@ -8,15 +8,16 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-    private File objFile = null;
     private final String pathName = "vectorSumResult.txt";
 
     private void createNewFileIO() {
         try
         {
-            objFile = new File(pathName);
-        }catch (NullPointerException ex)
+            File objFile = new File(pathName);
+        }
+        catch (NullPointerException ex)
         {
+            System.out.println("Error inside FileHandler.createNewFileIO: Path name is NULL");
             ex.printStackTrace();
         }
     }
@@ -30,7 +31,9 @@ public class FileHandler {
             writeToFileObj.write(textToSave);
             writeToFileObj.close();
             return true;
-        }catch (IOException ex){
+        }
+        catch (IOException ex)
+        {
             System.out.println("Exception occured while writing to File " + ex);
         }
         return false;

@@ -1,16 +1,16 @@
 package com.company;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+
 
 public class FileHandler {
 
     private final String pathName = "vectorSumResult.txt";
 
-    private void createNewFileIO() {
+    private void createNewFileIO()
+    {
         try
         {
             File objFile = new File(pathName);
@@ -38,8 +38,6 @@ public class FileHandler {
         }
         return false;
     }
-
-
 
 
 }

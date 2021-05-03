@@ -64,7 +64,7 @@ public class Vector {
 
             Scanner userScanner = new Scanner(System.in);
             String inputArray;
-            String[] splitedArray = null;
+            String[] splitedArray;
 
             inputArray = userScanner.nextLine();
             splitedArray = inputArray.split(" ");
@@ -96,7 +96,7 @@ public class Vector {
         return false;
     }
 
-    protected boolean addVectorTo(Vector component) // ADD TRY CATCH HERE
+    protected boolean addVectorTo(Vector component)
     {
 
         try
@@ -147,6 +147,7 @@ public class Vector {
             while (!secondVector.getVectorFromUser()) { }
 
         }while ( !firstVector.compareVectorTo(secondVector) );
+
         firstVector.addVectorTo(secondVector);
         fh.writeToFile(firstVector.generateStringFromVector());
         System.out.println(firstVector.generateStringFromVector());

@@ -14,89 +14,43 @@ public class Vector {
 
     }
 
-    protected Integer returnVectorLength(){
-        return vectorElements.size();
-    }
 
-    protected List<Integer> getVectorElements() {
+    public List<Integer> getVectorElements()
+    {
         return vectorElements;
     }
 
-    protected void setVectorElements(List<Integer> vectorElements) {
+    public void setVectorElements(List<Integer> vectorElements)
+    {
         this.vectorElements = vectorElements;
     }
 
-    protected boolean addVectorElement(Integer myInt){
-        return vectorElements.add(myInt);
-    }
 
-    protected boolean compareVectorTo(Vector tw){
+    public boolean compareVectorTo(Vector tw)
+    {
         try
         {
-            final Integer firstVectorLength = this.returnVectorLength();
-            final Integer secondVectorLength = tw.returnVectorLength();
+            final Integer firstVectorLength = this.vectorElements.size();
+            final Integer secondVectorLength = tw.vectorElements.size() ;
 
             if (firstVectorLength.compareTo(secondVectorLength) != 0)
-                throw new WektoryRoznejDlugosciException(firstVectorLength, secondVectorLength);
+                throw new WektoryRoznejDlugosciException(firstVectorLength, secondVectorLength, "Vector lengths are not equal inside Vector.compareVectorTo");
 
             return true;
         }
         catch (WektoryRoznejDlugosciException ex)
         {
             System.out.println(
-                            "Długość pierwszego wektora to " + ex.firstVal +
-                            ", a drugiego to " + ex.secondVal +
+                            "Długość pierwszego wektora to " + ex.getFirstVal() +
+                            ", a drugiego to " + ex.getSecondVal() +
+                            "\n" + ex +
                             "\nWprowadz wektory jeszcze raz:"
                               );
         }
         return false;
     }
 
-
-    protected String generateStringFromVector(){
-        return vectorElements.toString();
-    }
-
-    protected boolean getVectorFromUser(){
-        try
-        {
-            System.out.println("Wprowadz wartosci wektora oddzielone spacjami");
-
-            Scanner userScanner = new Scanner(System.in);
-            String inputArray;
-            String[] splitedArray;
-
-            inputArray = userScanner.nextLine();
-            splitedArray = inputArray.split(" ");
-
-            for(String ts : splitedArray)
-            {
-                addVectorElement(Integer.parseInt(ts));
-            }
-            return  true;
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("Error inside getVectorFromUser: vector consists of illegal characters");
-        }
-        catch (NoSuchElementException e)
-        {
-            System.out.println("Error inside getVectorFromUser: No line found to read");
-        }
-        catch (IllegalStateException e)
-        {
-            System.out.println("Error inside getVectorFromUser: Scanner is closed");
-        }
-        catch (PatternSyntaxException e)
-        {
-            System.out.println("Error inside getVectorFromUser: Invalid syntax inside split method");
-        }
-
-        vectorElements.clear();
-        return false;
-    }
-
-    protected boolean addVectorTo(Vector component)
+    public boolean compareVectorLengthTo(Vector component) throws NullPointerException
     {
 
         try
@@ -109,23 +63,19 @@ public class Vector {
 
             return true;
         }
-        catch ( UnsupportedOperationException e)
+        catch ( UnsupportedOperationException e) // to wyrzucić
         {
             System.out.println("Error inside Vector.addVector: target list doesn't support get() method");
         }
-        catch ( ClassCastException e)
+        catch ( ClassCastException e) // delete me
         {
             System.out.println("Error inside Vector.addVector: class of the specified element prevents it from being added to this list");
         }
-        catch ( NullPointerException  e)
-        {
-            System.out.println("Error inside Vector.addVector: NULL value inside vector");
-        }
-        catch ( IllegalArgumentException e)
+        catch ( IllegalArgumentException e) // maybe delete me
         {
             System.out.println("Error inside Vector.addVector: illegal arguments inside get() method");
         }
-        catch (IndexOutOfBoundsException e)
+        catch ( IndexOutOfBoundsException e)
         {
             System.out.println("Error inside Vector.addVector: index is out of bounds of the list size");
         }
@@ -134,24 +84,7 @@ public class Vector {
         return false;
     }
 
-    public static void main(String[] args) {
-        Vector firstVector = new Vector();
-        Vector secondVector = new Vector();
-        FileHandler fh = new FileHandler();
 
-        System.out.println("Podaj dwa wektory tej samej długości: \n");
-        do
-        {
-
-            while (!firstVector.getVectorFromUser()) { }
-            while (!secondVector.getVectorFromUser()) { }
-
-        }while ( !firstVector.compareVectorTo(secondVector) );
-
-        firstVector.addVectorTo(secondVector);
-        fh.writeToFile(firstVector.generateStringFromVector());
-        System.out.println(firstVector.generateStringFromVector());
-    }
 
 
 

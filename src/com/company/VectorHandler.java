@@ -1,15 +1,12 @@
 package com.company;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.regex.PatternSyntaxException;
 
 public class VectorHandler {
     private Vector firstVector = null;
     private Vector secondVector = null;
-
-    public VectorHandler(){}
 
     public VectorHandler(Vector firstVector, Vector secondVector)
     {
@@ -56,22 +53,13 @@ public class VectorHandler {
             }
             return  true;
         }
-        catch (NumberFormatException e) // runtime
+        catch (NumberFormatException e)
         {
-            System.out.println("Error inside getVectorFromUser: vector consists of illegal characters");
+            System.out.println("Exception: Input vector consists of illegal characters or is empty\n" +
+                                e.getMessage());
+            e.printStackTrace(System.err);
         }
-        catch (NoSuchElementException e) // runtime
-        {
-            System.out.println("Error inside getVectorFromUser: No line found to read");
-        }
-        catch (IllegalStateException e) // runtime
-        {
-            System.out.println("Error inside getVectorFromUser: Scanner is closed");
-        }
-        catch (PatternSyntaxException e) // runtime
-        {
-            System.out.println("Error inside getVectorFromUser: Invalid syntax inside split method");
-        }
+
 
         tv.getVectorElements().clear();
         return false;
@@ -81,26 +69,28 @@ public class VectorHandler {
         try
         {
             VectorHandler vectorHandler = new VectorHandler(new Vector(), new Vector());
-            FileHandler fh = new FileHandler();
-            final String readFilePath = "vectorSumResult.txt";
+            final String filePathToWrite = "vectorSumResult.txt";
 
             System.out.println("Podaj dwa wektory tej samej długości: \n");
             do
             {
 
-                while (!vectorHandler.getVectorFromUser(vectorHandler.getFirstVector())) { }
+                while ( !vectorHandler.getVectorFromUser( vectorHandler.getFirstVector() ) ) { }
 
-                while (!vectorHandler.getVectorFromUser(vectorHandler.getSecondVector())) { }
+                while ( !vectorHandler.getVectorFromUser( vectorHandler.getSecondVector() ) ) { }
 
-            } while (!vectorHandler.getFirstVector().compareVectorTo(vectorHandler.getSecondVector()));
+            } while ( !vectorHandler.getFirstVector().compareVectorTo( vectorHandler.getSecondVector()) );
 
-            vectorHandler.getFirstVector().compareVectorLengthTo(vectorHandler.getSecondVector());
-            fh.writeToFile(vectorHandler.getFirstVector().getVectorElements().toString(), readFilePath);
-            System.out.println(vectorHandler.getFirstVector().getVectorElements().toString());
+            vectorHandler.getFirstVector().addVectorToVector( vectorHandler.getSecondVector() );
+            System.out.println( vectorHandler.getFirstVector().getVectorElements().toString() );
+            FileHandler.writeToFile( vectorHandler.getFirstVector().getVectorElements().toString(), filePathToWrite );
+
         }
         catch (IOException ex)
         {
-            System.out.println("IOException occured");
+            System.out.println("IOException occured while writing to file and the program will shut down\n" + ex.getMessage());
+            ex.printStackTrace(System.err);
         }
+
     }
 }

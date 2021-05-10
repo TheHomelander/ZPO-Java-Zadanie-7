@@ -1,12 +1,11 @@
 package com.company;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class VectorHandler {
-    private Vector firstVector = null;
-    private Vector secondVector = null;
+    private Vector firstVector;
+    private Vector secondVector;
 
     public VectorHandler(Vector firstVector, Vector secondVector)
     {
@@ -38,6 +37,7 @@ public class VectorHandler {
     {
         try
         {
+            if(tv == null)return false;
             System.out.println("Wprowadz wartosci wektora oddzielone spacjami");
 
             Scanner userScanner = new Scanner(System.in);
@@ -68,18 +68,18 @@ public class VectorHandler {
     public static void main(String[] args) {
         try
         {
-            VectorHandler vectorHandler = new VectorHandler(new Vector(), new Vector());
+            VectorHandler vectorHandler = new VectorHandler( new Vector(), new Vector() );
             final String filePathToWrite = "vectorSumResult.txt";
 
             System.out.println("Podaj dwa wektory tej samej długości: \n");
             do
             {
 
-                while ( !vectorHandler.getVectorFromUser( vectorHandler.getFirstVector() ) ) { }
+                while ( !vectorHandler.getVectorFromUser( vectorHandler.getFirstVector() ) );
 
-                while ( !vectorHandler.getVectorFromUser( vectorHandler.getSecondVector() ) ) { }
+                while ( !vectorHandler.getVectorFromUser( vectorHandler.getSecondVector() ) );
 
-            } while ( !vectorHandler.getFirstVector().compareVectorTo( vectorHandler.getSecondVector()) );
+            } while ( !vectorHandler.getFirstVector().areVectorLengthsEqual( vectorHandler.getSecondVector()) );
 
             vectorHandler.getFirstVector().addVectorToVector( vectorHandler.getSecondVector() );
             System.out.println( vectorHandler.getFirstVector().getVectorElements().toString() );

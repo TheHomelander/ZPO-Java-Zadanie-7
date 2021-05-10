@@ -11,9 +11,7 @@ public class WektoryRoznejDlugosciException extends Exception{
         secondVectorLength = sizeTwo;
     }
 
-    public Integer getFirstVectorLength() {
-        return firstVectorLength;
-    }
+    public Integer getFirstVectorLength() { return firstVectorLength; }
 
     public void setFirstVectorLength(Integer firstVectorLength) {
         this.firstVectorLength = firstVectorLength;

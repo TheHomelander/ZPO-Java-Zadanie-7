@@ -20,10 +20,11 @@ public class Vector {
     }
 
 
-    public boolean compareVectorTo(Vector tw)
+    public boolean areVectorLengthsEqual(Vector tw)
     {
         try
         {
+            if(tw == null)return false;
             final Integer firstVectorLength = this.vectorElements.size();
             final Integer secondVectorLength = tw.vectorElements.size() ;
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Vector {
     private List<Integer> vectorElements = new ArrayList<>();
-
+    private int vectorLength;
 
     public Vector() { }
 
@@ -17,41 +17,38 @@ public class Vector {
     public void setVectorElements(List<Integer> vectorElements)
     {
         this.vectorElements = vectorElements;
+        vectorLength = vectorElements.size();
     }
 
-
-    public boolean areVectorLengthsEqual(Vector tw)
-    {
-        try
-        {
-            if(tw == null)return false;
-            final Integer firstVectorLength = this.vectorElements.size();
-            final Integer secondVectorLength = tw.vectorElements.size() ;
-
-            if (firstVectorLength.compareTo(secondVectorLength) != 0)
-                throw new WektoryRoznejDlugosciException(firstVectorLength, secondVectorLength, "Vector lengths are not equal");
-
-            return true;
-        }
-        catch (WektoryRoznejDlugosciException ex)
-        {
-            System.out.println(
-                                "Długość pierwszego wektora to " + ex.getFirstVectorLength() +
-                                ", a drugiego to " + ex.getSecondVectorLength() +
-                                "\n" + ex +
-                                "\nWprowadz wektory jeszcze raz:"
-                              );
-            ex.printStackTrace(System.err);
-        }
-        return false;
+    public int getVectorLength() {
+        return vectorLength;
     }
 
-    public boolean addVectorToVector(Vector component)
+    public void setVectorLength(int vectorLength) {
+        this.vectorLength = vectorLength;
+    }
+
+    public void areVectorLengthsEqual(Vector tw) throws WektoryRoznejDlugosciException
     {
+
+            if(tw != null)
+            {
+                final Integer firstVectorLength = this.vectorElements.size();
+                final Integer secondVectorLength = tw.vectorElements.size();
+
+                if (vectorLength != tw.getVectorLength())
+                    throw new WektoryRoznejDlugosciException(firstVectorLength, secondVectorLength, "Vector lengths are not equal");
+
+            }
+
+    }
+
+    public boolean addVectorToVector(Vector component) throws WektoryRoznejDlugosciException
+    {
+            this.areVectorLengthsEqual(component);
             if(component == null)return false;
 
-            final int vecSize = vectorElements.size();
-            for (int i = 0; i < vecSize; i++)
+            for (int i = 0; i < vectorLength; i++)
             {
                 vectorElements.set(i, vectorElements.get(i) + component.getVectorElements().get(i));
             }
